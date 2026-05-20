@@ -1,5 +1,15 @@
 import type { CollectionConfig } from 'payload'
 
+function slugify(title: string): string {
+  return title
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 4)
+    .map((w) => w.toLowerCase().replace(/[^a-z0-9]/g, ''))
+    .filter(Boolean)
+    .join('-')
+}
+
 export const Convenings: CollectionConfig = {
   slug: 'convenings',
   admin: {
@@ -8,6 +18,18 @@ export const Convenings: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (data.slug) {
+          data.slug = data.slug.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+        } else if (data.title) {
+          data.slug = slugify(data.title)
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -20,6 +42,18 @@ export const Convenings: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      validate: (val: string | null | undefined) => {
+        if (!val) return 'Slug is required.'
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(val))
+          return 'Slug may only contain lowercase letters, numbers, and hyphens (no leading/trailing hyphens).'
+        return true
+      },
+      admin: {
+        description: 'Auto-generated from title. Only lowercase letters, numbers, and hyphens.',
+        components: {
+          Field: 'src/components/payload/SlugField#SlugField',
+        },
+      },
     },
     {
       name: 'eventDate',
