@@ -124,7 +124,8 @@ export const Publications: CollectionConfig = {
         {
           name: "doi",
           type: "text",
-          admin: { description: "Optional DOI string." },
+          label: "External Link",
+          admin: { description: "Optional external link (URL or DOI)." },
         },
       ],
     },

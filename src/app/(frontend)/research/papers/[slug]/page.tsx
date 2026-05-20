@@ -65,7 +65,7 @@ export default async function PaperDetailPage({
     },
     url: `https://indiaisraelcentre.org/research/papers/${paper.slug}/`,
     keywords: pillar,
-    ...(paper.doi && { identifier: `https://doi.org/${paper.doi}` }),
+    ...(paper.doi && { url: paper.doi }),
   }
 
   return (
@@ -109,15 +109,17 @@ export default async function PaperDetailPage({
                 </a>
               )}
               {paper.doi && (
-                <div className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-stone-400">
-                  DOI:{' '}
-                  <a
-                    href={`https://doi.org/${paper.doi}`}
-                    className="text-iic-navy hover:text-iic-saffron transition-colors normal-case tracking-normal"
-                  >
-                    {paper.doi}
-                  </a>
-                </div>
+                <a
+                  href={paper.doi}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-sans font-semibold bg-stone-900 text-white px-5 py-3 hover:bg-white hover:text-black hover:border hover:border-black transition-colors w-full justify-center"
+                >
+                  Read full
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
               )}
             </div>
           </aside>

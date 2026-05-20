@@ -90,10 +90,24 @@ export default async function BriefDetailPage({
             <a
               href={pdfUrl}
               download
-              className="group inline-flex items-center gap-2 mb-10 text-sm font-sans font-semibold bg-iic-navy text-white px-5 py-3 rounded-sm hover:bg-iic-saffron transition-colors"
+              className="group inline-flex items-center gap-2 mb-4 text-sm font-sans font-semibold bg-iic-navy text-white px-5 py-3 rounded-sm hover:bg-iic-saffron transition-colors"
             >
               <span className="group-hover:translate-y-0.5 transition-transform">↓</span>
               Download PDF
+            </a>
+          )}
+
+          {brief.doi && (
+            <a
+              href={brief.doi}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mb-10 px-5 py-3 bg-stone-900 text-white hover:bg-white hover:text-black hover:border hover:border-black transition-colors font-medium text-sm"
+            >
+              Read full
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </a>
           )}
 
